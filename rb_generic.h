@@ -1,6 +1,4 @@
-
-#ifndef RINGBUFF_H
-#define RINGBUFF_H
+#pragma once
 
 #include <stdint.h>
 #include <unistd.h>
@@ -225,4 +223,3 @@ namespace collections
     
     
 }
-#endif // RINGBUFF_H

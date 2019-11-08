@@ -1,6 +1,4 @@
-
-#ifndef CQUEUE_H
-#define CQUEUE_H
+#pragma once
 
 #include <stdint.h>
 #include <atomic>
@@ -140,4 +138,3 @@ namespace collections
     
     
 }
-#endif // CQUEUE_H
