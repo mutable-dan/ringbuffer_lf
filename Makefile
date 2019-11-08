@@ -5,7 +5,8 @@ INCLUDE_DIR =
 
 
 EXE      = rb
-SOURCE   = cqueue.cpp rb_generic.cpp main.cpp
+#SOURCE   = cqueue.cpp rb_generic.cpp main.cpp
+SOURCE   = cqueue.cpp main.cpp
 LINKLIBS = -lpthread 
 
 OBJS     = $(SOURCE:.cpp=.o) 
