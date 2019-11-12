@@ -111,16 +111,16 @@ namespace collections
         private:
                     std::atomic<uint64_t>       m_ulQueueItemCount;
                     uint8_t                     m_padding_0[lCachLine-sizeof(int64_t)];
-                    std::atomic<uint64_t>       m_ulHead;
+                    std::atomic<uint64_t>       m_ulHead = { 0 };
                     uint8_t                     m_padding_1[lCachLine-sizeof(int64_t)];
-                    std::atomic<uint64_t>       m_ulTail;
+                    std::atomic<uint64_t>       m_ulTail = { 0 };
                     uint8_t                     m_padding_2[lCachLine-sizeof(int64_t)];
-            const   uint64_t                m_ulDataSize;
-            const   uint64_t                m_ulMask;
-                    void*                   m_pQueue;
+            const   uint64_t                    m_ulDataSize;
+            const   uint64_t                    m_ulMask;
+                    void*                       m_pQueue;
             
-            // diagnotics
-            int         m_nPageSize;
+                    // diagnotics
+                    int                         m_nPageSize = 0;
 
         public:
             CQueueLockFreeSingle( uint64_t a_ulQueueItemCount, uint64_t a_ulDataSize );

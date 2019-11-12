@@ -16,8 +16,6 @@ namespace collections
     
     CQueueLockFreeSingle::CQueueLockFreeSingle( uint64_t a_ulQueueItemCount, uint64_t a_ulDataSize ) :
         m_ulQueueItemCount( a_ulQueueItemCount ), 
-        m_ulHead( 0 ), 
-        m_ulTail( 0 ), 
         m_ulDataSize( a_ulDataSize ), 
         m_ulMask( a_ulQueueItemCount-1 )
     {

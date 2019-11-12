@@ -22,6 +22,8 @@ int main(int , char **)
    std::cout << "-----------" << sizeof( int64_t ) << std::endl;
    std::chrono::time_point<std::chrono::system_clock> start_test1, end_test1;
    std::chrono::time_point<std::chrono::system_clock> start_test2, end_test2;
+   (void)start_test1;
+   (void)end_test1;
 
 
    // single reader writer

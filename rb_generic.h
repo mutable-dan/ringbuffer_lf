@@ -120,15 +120,15 @@ namespace collections
         private:
                     std::atomic<uint64_t>       m_ulQueueItemCount;
                     uint8_t                     m_padding_0[g_lCachLine-sizeof(int64_t)];
-                    std::atomic<uint64_t>       m_ulHead;
+                    std::atomic<uint64_t>       m_ulHead    = { 0 };
                     uint8_t                     m_padding_1[g_lCachLine-sizeof(int64_t)];
-                    std::atomic<uint64_t>       m_ulTail;
+                    std::atomic<uint64_t>       m_ulTail    = { 0 };
                     uint8_t                     m_padding_2[g_lCachLine-sizeof(int64_t)];
             const   uint64_t                    m_ulMask;
                     uint8_t*                    m_pQueue;
             
-            // diagnotics
-            int         m_nPageSize;
+                    // diagnotics
+                    int                         m_nPageSize = 0;
 
         public:
             CRingbuffer( uint64_t a_ulQueueItemCount );
@@ -163,8 +163,6 @@ namespace collections
          public:
                CRingbuffer( uint64_t a_ulQueueItemCount ) :
                   m_ulQueueItemCount( a_ulQueueItemCount ), 
-                  m_ulHead( 0 ), 
-                  m_ulTail( 0 ), 
                   m_ulMask( a_ulQueueItemCount-1 )
                {
                   m_nPageSize = getpagesize();
