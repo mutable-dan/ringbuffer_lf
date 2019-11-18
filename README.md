@@ -1,1 +1,1 @@
-#### lockfree ringbufferand incomplete generic lockfree ringbuffer
+#### lockfree ringbuffer and incomplete generic lockfree ringbuffer
