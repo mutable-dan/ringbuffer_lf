@@ -15,12 +15,12 @@ namespace collections
     
     
     CQueueLockFreeSingle::CQueueLockFreeSingle( uint64_t a_ulQueueItemCount, uint64_t a_ulDataSize ) :
-        m_ulQueueItemCount( a_ulQueueItemCount ), 
-        m_ulDataSize( a_ulDataSize ), 
-        m_ulMask( a_ulQueueItemCount-1 )
+        m_ulQueueSize( a_ulQueueItemCount ),
+        m_ulDataSize ( a_ulDataSize ),
+        m_ulMask     ( a_ulQueueItemCount-1 )
     {
         m_nPageSize = getpagesize();
-        if( 0 != posix_memalign( &m_pQueue, m_nPageSize, m_ulQueueItemCount*m_ulDataSize ) )
+        if( 0 != posix_memalign( &m_pQueue, m_nPageSize, m_ulQueueSize*m_ulDataSize ) )
         {
             cerr << "failed to get queue memory" << endl;
             m_pQueue = nullptr;
@@ -46,13 +46,11 @@ namespace collections
      **/
     bool CQueueLockFreeSingle::push( void* a_pData )
     {
-      /////std::unique_lock<std::mutex> lock( m_mtx );
-      
       // full if head = tail+#elements  
       // not full then head < tail + #elements
       // want to wait if full !(head == tail + elements) or head != tail + #elements
         
-      if( (m_ulTail + m_ulQueueItemCount) == m_ulHead )
+      if( (m_ulTail + m_ulQueueSize) == m_ulHead )
       {
          return false;
       }
@@ -67,18 +65,19 @@ namespace collections
      *
      * @return void*
      **/
-    void* CQueueLockFreeSingle::pop( void* a_pData )
+    bool CQueueLockFreeSingle::pop( void* a_pData )
     {
       // empty if head == tail
       // wait if empty !(head == tail) or head != tail
 
       if( m_ulTail == m_ulHead )
       {
-         return nullptr;
+          // empty
+          return false;
       }
         
       memcpy( a_pData, (m_pQueue + (m_ulTail++ & m_ulMask)*m_ulDataSize), m_ulDataSize );
-      return a_pData;
+      return true;
     }
     
     
