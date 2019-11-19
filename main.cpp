@@ -91,7 +91,7 @@ void reader_test( collections::CQueueLockFreeSingle& a_queue  )
             #ifdef DEBUG
                 cout << "pop: empty" << endl;
             #endif
-            pthread_yield();
+            this_thread::yield();
         }
         #ifdef DEBUG
             cout << "pop:" << unData << endl;
