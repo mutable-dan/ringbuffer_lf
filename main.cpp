@@ -70,7 +70,7 @@ void writer_test( collections::CQueueLockFreeSingle& a_queue )
             #ifdef DEBUG
                 cout << "push: full" << endl;
             #endif
-            pthread_yield();
+            this_thread::yield();
         }
     }
 }
