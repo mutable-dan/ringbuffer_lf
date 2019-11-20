@@ -55,7 +55,9 @@ namespace collections
          return false;
       }
         
-      memcpy( (m_pQueue + ( m_ulHead++ & m_ulMask )*m_ulDataSize), a_pData, m_ulDataSize ); // dest, src, size
+      // datasize is m_ulDataSize
+      // cast void as char, thus an int32 would have a size of 4 in x86
+      memcpy( ( static_cast<char*>(m_pQueue) + ( m_ulHead++ & m_ulMask )*m_ulDataSize), a_pData, m_ulDataSize );
       return true;
     }
 
@@ -76,7 +78,7 @@ namespace collections
           return false;
       }
         
-      memcpy( a_pData, (m_pQueue + (m_ulTail++ & m_ulMask)*m_ulDataSize), m_ulDataSize );
+      memcpy( a_pData, ( static_cast<char*>(m_pQueue) + (m_ulTail++ & m_ulMask)*m_ulDataSize), m_ulDataSize );
       return true;
     }
     
