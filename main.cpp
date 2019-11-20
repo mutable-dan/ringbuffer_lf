@@ -41,10 +41,9 @@ int main(int , char **)
     std::cout << "execution time:" << std::chrono::duration_cast<std::chrono::milliseconds>( end_test - start_test ).count() << " ms" << std::endl;
     std::cout << "execution time:" << std::chrono::duration_cast<std::chrono::nanoseconds> ( end_test - start_test ).count() << " ns" << std::endl;
     
-    int32_t abuf[100];
+    int32_t nval = 1;
     collections::generic::CRingbuffer<int32_t> rb( 10 );
-    rb.push( &abuf[0] );
-    int32_t nval;
+    rb.push( &nval );
     rb.pop( &nval );
     return 0;
 }

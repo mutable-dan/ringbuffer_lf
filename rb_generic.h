@@ -138,8 +138,8 @@ namespace collections
             CRingbuffer&   operator= ( const CRingbuffer& other ) = delete;
             bool           operator==(const CRingbuffer& other)   = delete;
             
-            uint8_t* pop ( uint8_t* a_pData );
-            bool     push( uint8_t* a_pData );
+            bool  pop ( uint8_t* a_pData );
+            bool  push( uint8_t* a_pData );
     };   
     
     
@@ -161,9 +161,7 @@ namespace collections
                int         m_nPageSize;
 
          public:
-               CRingbuffer( uint64_t a_ulQueueItemCount ) :
-                  m_ulQueueItemCount( a_ulQueueItemCount ), 
-                  m_ulMask( a_ulQueueItemCount-1 )
+               CRingbuffer( uint64_t a_ulQueueItemCount ) : m_ulQueueItemCount( a_ulQueueItemCount ),  m_ulMask( a_ulQueueItemCount-1 )
                {
                   m_nPageSize = getpagesize();
                   if( 0 != posix_memalign( (void**)&m_pQueue, m_nPageSize, m_ulQueueItemCount*sizeof(T) ) )
@@ -198,22 +196,22 @@ namespace collections
                      return false;
                   }
                   
-                  *(m_pQueue + ( m_ulHead++ & m_ulMask )*sizeof(T) ) = *a_pData;
+                  *( m_pQueue + (m_ulHead++ & m_ulMask)*sizeof(T) ) = *a_pData;
                   return true;
                }
                
-               T* pop ( T* a_pData )
+               bool pop ( T* a_pData )
                {
                   // empty if head == tail
                   // wait if empty !(head == tail) or head != tail
 
                   if( m_ulTail == m_ulHead )
                   {
-                     return nullptr;
+                     return false;
                   }
                   
                   *a_pData = *(m_pQueue + (m_ulTail++ & m_ulMask)*sizeof(T) );
-                  return a_pData;
+                  return true;
                }
                
       };   
